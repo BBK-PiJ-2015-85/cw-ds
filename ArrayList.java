@@ -1,94 +1,85 @@
 public class ArrayList implements List {
-	private Object[] intArray;
-	private final static int DEFAULT_SIZE = 20;
-	private long numberOfElements;//increment when adding and decrement when removing
+	private Object[] myArray;
+	private final static int DEFAULT_SIZE = 50;
+	private int numberOfElements;
 	
 	public ArrayList() {
-		intArray = new Object[DEFAULT_SIZE];
+		myArray = new Object[DEFAULT_SIZE];
 		numberOfElements = 0;
 	}
-	/**
-	 * Returns true if the list is empty, false otherwise. 
-	 * 
-	 * @return true if the list is empty, false otherwise. 
-	 */
+
 	public boolean isEmpty() {
 		return numberOfElements == 0;
 	}
 
-	/**
-	 * Returns the number of items currently in the list.
-	 * 
-	 * @return the number of items currently in the list
-	 */
 	public int size() {
 		return numberOfElements;
 	}
 
-	/**
-	 * Returns the element at the given position. 
-	 * 
-	 * If the index is negative or greater or equal than the size of
-	 * the list, then an appropriate error must be returned.
-	 * 
-	 * @param index the position in the list of the item to be retrieved
-	 * @return the element or an appropriate error message, 
-	 *         encapsulated in a ReturnObject
-	 */
 	public ReturnObject get(int index) {
 		if (index < 0 || index >= numberOfElements) {
 			return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
 		} else {
-			return new ReturnObjectImpl(intArray[index]);
+			return new ReturnObjectImpl(myArray[index]);
 		}
 	}
 
-	/**
-	 * Returns the elements at the given position and removes it
-	 * from the list. The indeces of elements after the removed
-	 * element must be updated accordignly.
-	 * 
-	 * If the index is negative or greater or equal than the size of
-	 * the list, then an appropriate error must be returned.
-	 * 
-	 * @param index the position in the list of the item to be retrieved
-	 * @return the element or an appropriate error message, 
-	 *         encapsulated in a ReturnObject
-	 */
 	public ReturnObject remove(int index) {
-		
+		if (index < 0 || index >= numberOfElements) {
+			return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
+		} else {
+			//encapsulate the element as a ReturnObject
+			ReturnObject removedElement = new ReturnObjectImpl(myArray[index]);
+			//move every element after it down one index
+			for (int i = index; i < numberOfElements - 1; i++) {
+				myArray[i] = myArray[i + 1];
+			}
+			//set the now obsolete last element to null
+			myArray[numberOfElements - 1] = null;
+			numberOfElements--;
+			return removedElement;
+		}
 	}
 
-	/**
-	 * Adds an element to the list, inserting it at the given
-	 * position. The indeces of elements at and after that position
-	 * must be updated accordignly.
-	 * 
-	 * If the index is negative or greater or equal than the size of
-	 * the list, then an appropriate error must be returned.
-	 * 
-	 * If a null object is provided to insert in the list, the
-	 * request must be ignored and an appropriate error must be
-	 * returned.
-	 * 
-	 * @param index the position at which the item should be inserted in
-	 *              the list
-	 * @param item the value to insert into the list
-	 * @return an ReturnObject, empty if the operation is successful
-	 *         or containing an appropriate error message otherwise
-	 */
-	public ReturnObject add(int index, Object item);
+	public ReturnObject add(int index, Object item) {
+		if (index < 0 || index >= numberOfElements) {
+			return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
+		}
+		if (item == null) {
+			return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
+		} else {
+			//check array is not full
+			checkSize();
+			//move every element after the insertion up one index
+			for (int i = numberOfElements; i > index; i--) {
+				myArray[i] = myArray[i-1];
+			}
+			myArray[index] = item;
+			numberOfElements++;
+			return new ReturnObjectImpl(item);
+		}
+	}
 
-	/**
-	 * Adds an element at the end of the list.
-	 * 
-	 * If a null object is provided to insert in the list, the
-	 * request must be ignored and an appropriate error must be
-	 * returned.
-	 * 
-	 * @param item the value to insert into the list
-	 * @return an ReturnObject, empty if the operation is successful
-	 *         or containing an appropriate error message otherwise
-	 */
-	public ReturnObject add(Object item);
+	public ReturnObject add(Object item) {
+		if (item == null) {
+			return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
+		} else {
+			checkSize();
+			myArray[numberOfElements] = item;
+			numberOfElements++;
+			return new ReturnObjectImpl(item);
+		}
+	}
+	
+	//method that checks if the array is full and if it 
+	//is increases the size by the default amount
+	private void checkSize() {
+		if (myArray.length == numberOfElements) {
+			Object[] tempArray = new Object[myArray.length + DEFAULT_SIZE];
+			for (int i = 0; i < numberOfElements; i++) {
+				tempArray[i] = myArray[i];
+			}			
+			myArray = tempArray;
+		}
+	}
 }
