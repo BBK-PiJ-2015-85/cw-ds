@@ -56,7 +56,7 @@ public class ArrayList implements List {
 			}
 			myArray[index] = item;
 			numberOfElements++;
-			return new ReturnObjectImpl(item);
+			return new ReturnObjectImpl(null);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class ArrayList implements List {
 			checkSize();
 			myArray[numberOfElements] = item;
 			numberOfElements++;
-			return new ReturnObjectImpl(item);
+			return new ReturnObjectImpl(null);
 		}
 	}
 	
