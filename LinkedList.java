@@ -1,40 +1,22 @@
 public class LinkedList implements List {
-	public LinkedListNode head;
-	public LinkedListNode tail;
-	public int size;
+	private LinkedListNode head;
+	private LinkedListNode tail;
+	private int size;
 	
 	public LinkedList() {
 		head = null;
+		tail = null;
 		size = 0;
 	}
-	/**
-	 * Returns true if the list is empty, false otherwise. 
-	 * 
-	 * @return true if the list is empty, false otherwise. 
-	 */
+	
 	public boolean isEmpty() {
 		return size == 0;
 	}
 
-	/**
-	 * Returns the number of items currently in the list.
-	 * 
-	 * @return the number of items currently in the list
-	 */
 	public int size() {
 		return size;
 	}
 
-	/**
-	 * Returns the element at the given position. 
-	 * 
-	 * If the index is negative or greater or equal than the size of
-	 * the list, then an appropriate error must be returned.
-	 * 
-	 * @param index the position in the list of the item to be retrieved
-	 * @return the element or an appropriate error message, 
-	 *         encapsulated in a ReturnObject
-	 */
 	public ReturnObject get(int index) {
 		if (index < 0 || index >= size) {
 			return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
@@ -50,25 +32,13 @@ public class LinkedList implements List {
 			return new ReturnObjectImpl(temp.getItem());
 		}
 	}
-	
 
-	/**
-	 * Returns the elements at the given position and removes it
-	 * from the list. The indeces of elements after the removed
-	 * element must be updated accordignly.
-	 * 
-	 * If the index is negative or greater or equal than the size of
-	 * the list, then an appropriate error must be returned.
-	 * 
-	 * @param index the position in the list of the item to be retrieved
-	 * @return the element or an appropriate error message, 
-	 *         encapsulated in a ReturnObject
-	 */
 	public ReturnObject remove(int index) {
 		if (index < 0 || index >= size) {
 			return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
 		} else {
-			ReturnObject removedElement = new ReturnObjectImpl(get(index)); 
+			//encapsulate item to remove as return object
+			ReturnObject removedElement = get(index); 
 			if (head.getIndex() == index) {
 				//element to remove is the first item
 				if (head.getNext() == null) {
@@ -76,24 +46,23 @@ public class LinkedList implements List {
 					head = null;
 					tail = null;
 				} else {
-					head.getNext().setPrev(null);
 					head = head.getNext();									
 				}
 			} else {
 				LinkedListNode temp = head;
 				while (temp.getNext() != null) {
+					//enter this loop to find element to remove
 					if (temp.getNext().getIndex() == index) {
 						//found element to remove
 						if (temp.getNext().getNext() != null) {
+							//element to remove has elements either side of it
 							//change pointers so that element to remove is skipped
 							temp.setNext(temp.getNext().getNext());
-							temp.getNext().setPrev(null);
-							temp.getNext().setPrev(temp);
 							break;
 						} else {
-							//element to remove is last in the list so set next to null
+							//element to remove is last in the list
 							temp.setNext(null);
-							tail = tail.getPrev();
+							tail = temp;
 							break;
 						}						
 					}
@@ -109,39 +78,35 @@ public class LinkedList implements List {
 		}
 	}
 
-	/**
-	 * Adds an element to the list, inserting it at the given
-	 * position. The indeces of elements at and after that position
-	 * must be updated accordignly.
-	 * 
-	 * If the index is negative or greater or equal than the size of
-	 * the list, then an appropriate error must be returned.
-	 * 
-	 * If a null object is provided to insert in the list, the
-	 * request must be ignored and an appropriate error must be
-	 * returned.
-	 * 
-	 * @param index the position at which the item should be inserted in
-	 *              the list
-	 * @param item the value to insert into the list
-	 * @return an ReturnObject, empty if the operation is successful
-	 *         or containing an appropriate error message otherwise
-	 */
 	public ReturnObject add(int index, Object item) {
-		return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
+		if (index < 0 || index >= size) {
+			return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
+		}
+		if (item == null) {
+			return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
+		}
+		LinkedListNode newNode = new LinkedListNode(item, index);
+		if (index == 0) {
+			//insert at start of list
+			newNode.setNext(head);
+			head = newNode;
+		} else {
+			//insert mid list
+			LinkedListNode temp = head;
+			while (temp.getNext() != null) {
+				if (temp.getNext().getIndex() == index) {
+					newNode.setNext(temp.getNext());
+					temp.setNext(newNode);
+					break;
+				}
+				temp = temp.getNext();
+			}
+		}
+		insertIndexAdjust(index);
+		size++;
+		return new ReturnObjectImpl(ErrorMessage.NO_ERROR);	
 	}
 
-	/**
-	 * Adds an element at the end of the list.
-	 * 
-	 * If a null object is provided to insert in the list, the
-	 * request must be ignored and an appropriate error must be
-	 * returned.
-	 * 
-	 * @param item the value to insert into the list
-	 * @return an ReturnObject, empty if the operation is successful
-	 *         or containing an appropriate error message otherwise
-	 */
 	public ReturnObject add(Object item) {
 		if (item == null) {
 			return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
@@ -151,13 +116,13 @@ public class LinkedList implements List {
 			head = new LinkedListNode(item, 0);
 			tail = head;
 		} else {
+			//list not empty so add at end
 			LinkedListNode newNode = new LinkedListNode(item, tail.getIndex() + 1);
 			tail.setNext(newNode);
-			newNode.setPrev(tail);
 			tail = newNode;
 		}
 		size++;
-		return new ReturnObjectImpl(null);
+		return new ReturnObjectImpl(ErrorMessage.NO_ERROR);
 	}
 	
 	//after an element has been removed this method adjusts the remaining indices accordingly
@@ -188,6 +153,33 @@ public class LinkedList implements List {
 		}		
 	}
 	
+	//method to adjust the indices after a new item has been inserted to the list
+	private void insertIndexAdjust(int index) {
+		LinkedListNode temp = head;
+		if (index == 0) {
+			//it was inserted at the start so adjust all indices after head			
+			while (temp.getNext() != null) {
+				temp.getNext().setIndex(temp.getNext().getIndex() + 1);
+				temp = temp.getNext();
+			}
+		} else {			
+			while (temp.getNext() != null) {
+				//enter this loop to find the inserted element
+				if (temp.getIndex() == index) {
+					//temp is now the element that was inserted so exit loop					
+					break;
+				}
+				temp = temp.getNext();
+			}
+			while (temp.getNext() != null) {
+				//adjust all indices after temp
+				temp.getNext().setIndex(temp.getNext().getIndex() + 1);
+				temp = temp.getNext();
+			}
+		}
+	}
+	
+	//print list method used for testing purposes
 	public void printList() {
 		LinkedListNode temp = head;
 		while (temp != null) {
