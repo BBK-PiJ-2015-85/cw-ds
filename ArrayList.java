@@ -1,6 +1,6 @@
 public class ArrayList implements List {
 	private Object[] myArray;
-	private final static int DEFAULT_SIZE = 50;
+	private final static int DEFAULT_SIZE = 20;
 	private int numberOfElements;
 	
 	public ArrayList() {
@@ -56,7 +56,7 @@ public class ArrayList implements List {
 			}
 			myArray[index] = item;
 			numberOfElements++;
-			return new ReturnObjectImpl(null);
+			return new ReturnObjectImpl(ErrorMessage.NO_ERROR);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class ArrayList implements List {
 			checkSize();
 			myArray[numberOfElements] = item;
 			numberOfElements++;
-			return new ReturnObjectImpl(null);
+			return new ReturnObjectImpl(ErrorMessage.NO_ERROR);
 		}
 	}
 	
@@ -75,7 +75,7 @@ public class ArrayList implements List {
 	//is increases the size by the default amount
 	private void checkSize() {
 		if (myArray.length == numberOfElements) {
-			Object[] tempArray = new Object[myArray.length + DEFAULT_SIZE];
+			Object[] tempArray = new Object[myArray.length * 2];
 			for (int i = 0; i < numberOfElements; i++) {
 				tempArray[i] = myArray[i];
 			}			

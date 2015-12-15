@@ -26,6 +26,7 @@ public class ArrayListTest {
 		System.out.println(al.size());
 		System.out.println("******");
 		
+		
 		ro = al.add(0, null);
 		if (ro.hasError()){
 			System.out.println(ro.getError());
@@ -98,12 +99,15 @@ public class ArrayListTest {
 		}
 		System.out.println(al.size());
 		
+		
 		ro = al.remove(6000);
 		if (ro.hasError()) {
 			System.out.println(ro.getError());
 		} else {
 			System.out.println(ro.getReturnValue());
 		}
+		
+		
 		ro = al.get(6000);
 		if (ro.hasError()){
 			System.out.println(ro.getError());
@@ -117,12 +121,15 @@ public class ArrayListTest {
 		} else {
 			System.out.println(ro.getReturnValue());
 		}
+		
+		
 		ro = al.add(0, "x");
 		if (ro.hasError()){
 			System.out.println(ro.getError());
 		} else {
 			System.out.println(ro.getReturnValue());
 		}
+		
 		ro = al.get(0);
 		if (ro.hasError()){
 			System.out.println(ro.getError());
@@ -148,5 +155,6 @@ public class ArrayListTest {
 		} else {
 			System.out.println(ro.getReturnValue());
 		}
+		
 	}
 }
