@@ -1,15 +1,15 @@
 public class ReturnObjectImpl implements ReturnObject {
-	private Object obj;
-	private ErrorMessage em;
+	private Object item;
+	private ErrorMessage errMess;
 	
-	public ReturnObjectImpl(Object obj) {
-		this.obj = obj;
-		this.em = ErrorMessage.NO_ERROR;		
+	public ReturnObjectImpl(Object item) {
+		this.item = item;
+		this.errMess = ErrorMessage.NO_ERROR;	
 	}
 	
-	public ReturnObjectImpl(ErrorMessage em) {
-		this.em = em;
-		this.object = null;
+	public ReturnObjectImpl(ErrorMessage errMess) {
+		this.errMess = errMess;
+		this.item = null;
 	}
 	
 	/**
@@ -17,7 +17,7 @@ public class ReturnObjectImpl implements ReturnObject {
 	 * @return whether there has been an error
 	 */
 	public boolean hasError() {
-		return em != ErrorMessage.NO_ERROR;
+		return errMess != ErrorMessage.NO_ERROR;
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class ReturnObjectImpl implements ReturnObject {
 	 * @return the error message
 	 */
 	public ErrorMessage getError() {
-		return em;
+		return errMess;
 	}
 
 	/**
@@ -45,6 +45,6 @@ public class ReturnObjectImpl implements ReturnObject {
 	 * @return the return value from the method or null if there has been an error
 	 */
 	public Object getReturnValue() {
-		return obj;
+		return item;
 	}
 }
