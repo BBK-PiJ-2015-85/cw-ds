@@ -21,15 +21,29 @@ public class LinkedList implements List {
 		if (index < 0 || index >= size) {
 			return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
 		} else {
-			LinkedListNode temp = head;
-			while (temp != null) {
-				if (temp.getIndex() == index) {
-					break;
-				} else {
-					temp = temp.getNext();
+			if (index > size() / 2) {
+				//item to find is closer to tail so start search from there
+				LinkedListNode temp = tail;
+				while (temp != null) {
+					if (temp.getIndex() == index) {
+						break;
+					} else {
+						temp = temp.getPrev();
+					}
 				}
-			}				
-			return new ReturnObjectImpl(temp.getItem());
+				return new ReturnObjectImpl(temp.getItem());
+			} else {
+				//item to find is closer to head so start search from there
+				LinkedListNode temp = head;
+				while (temp != null) {
+					if (temp.getIndex() == index) {
+						break;
+					} else {
+						temp = temp.getNext();
+					}
+				}				
+				return new ReturnObjectImpl(temp.getItem());
+			}			
 		}
 	}
 
@@ -46,7 +60,8 @@ public class LinkedList implements List {
 					head = null;
 					tail = null;
 				} else {
-					head = head.getNext();									
+					head.getNext().setPrev(null);
+					head = head.getNext();					
 				}
 			} else {
 				LinkedListNode temp = head;
@@ -58,9 +73,10 @@ public class LinkedList implements List {
 							//element to remove has elements either side of it
 							//change pointers so that element to remove is skipped
 							temp.setNext(temp.getNext().getNext());
+							temp.getNext().setPrev(temp);
 							break;
 						} else {
-							//element to remove is last in the list
+							//element to remove is last in the list							
 							temp.setNext(null);
 							tail = temp;
 							break;
@@ -88,6 +104,7 @@ public class LinkedList implements List {
 		LinkedListNode newNode = new LinkedListNode(item, index);
 		if (index == 0) {
 			//insert at start of list
+			head.setPrev(newNode);
 			newNode.setNext(head);
 			head = newNode;
 		} else {
@@ -96,6 +113,8 @@ public class LinkedList implements List {
 			while (temp.getNext() != null) {
 				if (temp.getNext().getIndex() == index) {
 					newNode.setNext(temp.getNext());
+					newNode.setPrev(temp);
+					temp.getNext().setPrev(newNode);
 					temp.setNext(newNode);
 					break;
 				}
@@ -118,6 +137,7 @@ public class LinkedList implements List {
 		} else {
 			//list not empty so add at end
 			LinkedListNode newNode = new LinkedListNode(item, tail.getIndex() + 1);
+			newNode.setPrev(tail);
 			tail.setNext(newNode);
 			tail = newNode;
 		}
@@ -179,14 +199,31 @@ public class LinkedList implements List {
 		}
 	}
 	
-	//print list method used for testing purposes
-	public void printList() {
+	//returns the specified elements item (not encapsulated in a return object)
+	public Object getItem(int index) {
 		LinkedListNode temp = head;
 		while (temp != null) {
-			System.out.print(temp.getItem() + ", ");
+			if (temp.getIndex() == index) {
+				break;
+			}
 			temp = temp.getNext();
 		}
-		System.out.println();
+		return temp.getItem();
+	}
+	
+	//converts list to string, used for testing purposes
+	//also states each item's index in brackets
+	public String toString() {
+		String str = "";
+		LinkedListNode temp = head;
+		for (int i = 0; i < size(); i++) {
+			str += getItem(i) + " (" + temp.getIndex() + ")";
+			if (i < size() - 1) {
+				str += ", ";
+			}
+			temp = temp.getNext();
+		}
+		return str;
 	}
 	
 	

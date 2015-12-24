@@ -13,7 +13,7 @@ public class FunctionalArrayListTest {
 		for (int i = 0; i < 5; i++) {
 			fal.add(i);
 		}
-		fal.printList();		
+		System.out.println(fal.toString());		
 		ro = fal.head();
 		System.out.println(ro.getReturnValue());
 		System.out.println(ro.hasError());
@@ -21,29 +21,28 @@ public class FunctionalArrayListTest {
 		
 		System.out.println("*****");
 		
-		for (int i = 4; i >= 0; i--) {
+		for (int i = 4; i > 1; i--) {
 			fal.remove(i);
 		}
-		fal.printList();
+		System.out.println(fal.toString());
 		
 		System.out.println("*****");
 		
 		FunctionalList fl = fal.rest();
 		fl.add("x");
-		((FunctionalArrayList)fl).printList();
+		System.out.println(((FunctionalArrayList)fl).toString());
 		fl.add(0, "start");
 		fl.remove(1);
 		System.out.println("*****");
-		((FunctionalArrayList)fl).printList();
+		System.out.println(((FunctionalArrayList)fl).toString());
 		System.out.println(fl.isEmpty());
 		System.out.println(fl.size());
 		System.out.println(fl.get(0));
 		
-		//FunctionalArrayList flPrint = (FunctionalArrayList) fl;
-		//flPrint.printList();	
+			
 		
 		System.out.println("*****");
 		
-		fal.printList();
+		System.out.println(fal.toString());
 	}
 }

@@ -89,16 +89,24 @@ public class ArrayList implements List {
 		return myArray[index];
 	}
 	
-	//returns the length of the list including empty spaces
-	public int arrayLength() {
-		return myArray.length;
+	public void rev() {
+		for (int i = 0; i < size() / 2; i++) {
+			Object temp = myArray[i];
+			myArray[i] = myArray[size() - i - 1];
+			myArray[size() - i - 1] = temp;
+		}
+		System.out.println("HERE");
 	}
 	
-	//method used for printing the list for testing purposes
-	public void printList() {
+	//converts the list to a string for testing purposes
+	public String toString() {
+		String str = "";
 		for (int i = 0; i < myArray.length; i++) {
-			System.out.print(myArray[i] + ", ");
+			str += myArray[i];
+			if (i < myArray.length - 1) {
+				str += ", ";
+			}
 		}
-		System.out.println();
+		return str;
 	}
 }

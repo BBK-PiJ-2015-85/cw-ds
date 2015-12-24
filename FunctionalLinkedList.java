@@ -1,5 +1,6 @@
-public class FunctionalArrayList extends ArrayList implements FunctionalList {
-	/**
+public class FunctionalLinkedList extends LinkedList implements FunctionalList {
+	
+    /**
      * Returns the element at the beginning of the list. 
      * 
      * If the list is empty, an appropriate error is returned. 
@@ -7,13 +8,12 @@ public class FunctionalArrayList extends ArrayList implements FunctionalList {
      * @return a copy of the element at the beginning of the list or 
      *         an error if the list is empty.
      */
-	 
     public ReturnObject head() {
 		if (size() == 0) {
 			return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
 		} else {
 			return get(0);
-		}			
+		}
 	}
 
     /**
@@ -24,16 +24,23 @@ public class FunctionalArrayList extends ArrayList implements FunctionalList {
      * If the list is empty, another empty list is returned. 
      */
     public FunctionalList rest() {
-		FunctionalArrayList rest = new FunctionalArrayList();
+		FunctionalLinkedList rest = new FunctionalLinkedList();
 		if (size() > 0) {
 			for (int i = 1; i < size(); i++) {
 				rest.add(getItem(i));
 			}
-		}		
+		}
 		return rest;
 	}
 	
-
-	
-	
+	public String toString() {
+		String str = "";
+		for (int i = 0; i < size(); i++) {
+			str += getItem(i);
+			if (i < size() - 1) {
+				str += ", ";
+			}
+		}
+		return str;
+	}
 }

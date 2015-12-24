@@ -1,6 +1,6 @@
 public class ArrayListTest {
 	public static void main(String[] args) {
-		//below here arralist needs to be list when fully testing!!!
+		
 		List al = new ArrayList();
 		
 		
