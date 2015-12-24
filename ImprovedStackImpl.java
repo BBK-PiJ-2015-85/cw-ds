@@ -69,21 +69,7 @@ public class ImprovedStackImpl implements ImprovedStack {
 	 * stack and viceversa.
 	 * 
 	 * @return a copy of this stack with the items reversed. 
-	 */
-	
-	/*
-	public ImprovedStack reverse() {		
-		ArrayList reverseInternalList = new ArrayList();
-		for (int i = 0; i < size(); i++) {
-			ReturnObject ro = internalList.get(i);
-			reverseInternalList.add(ro.getReturnValue());
-		}
-		reverseInternalList.rev();
-		ImprovedStack reverse = new ImprovedStackImpl(reverseInternalList);
-		return reverse;
-	}
-	*/
-	
+	 */	
 	public ImprovedStack reverse() {
 		ArrayList revInternalList = new ArrayList();
 		for (int i = size() - 1; i >= 0; i--) {
