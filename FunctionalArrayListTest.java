@@ -3,6 +3,14 @@ public class FunctionalArrayListTest {
 		FunctionalArrayList fal = new FunctionalArrayList();
 		System.out.println();
 		
+		FunctionalList fl = fal.rest();
+		System.out.println(((FunctionalArrayList)fl).toString());
+		fal.add(0);
+		fl = fal.rest();
+		System.out.println(((FunctionalArrayList)fl).toString());
+		fal.add(1);
+		fl = fal.rest();
+		System.out.println(((FunctionalArrayList)fl).toString());
 		ReturnObject ro = fal.head();
 		System.out.println(ro.getReturnValue());
 		System.out.println(ro.hasError());
@@ -21,14 +29,12 @@ public class FunctionalArrayListTest {
 		
 		System.out.println("*****");
 		
-		for (int i = 4; i > 1; i--) {
-			fal.remove(i);
-		}
+	
 		System.out.println(fal.toString());
 		
 		System.out.println("*****");
 		
-		FunctionalList fl = fal.rest();
+		fl = fal.rest();
 		fl.add("x");
 		System.out.println(((FunctionalArrayList)fl).toString());
 		fl.add(0, "start");
