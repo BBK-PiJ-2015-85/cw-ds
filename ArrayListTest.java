@@ -19,6 +19,37 @@ public class ArrayListTest {
 		} else {
 			System.out.println(ro.getReturnValue());
 		}
+		
+		
+		for (int i = 0; i < 5; i++) {
+			al.add(i);
+		} 
+		System.out.println(al.toString());
+		al.add(0, "x");
+		System.out.println("adding x at position 0: " + al.toString());
+		al.add(6, "y");
+		System.out.println("attempted to insert y at end: " + al.toString());
+		al.add(3, "z");
+		System.out.println("adding z at position 3: " + al.toString());
+		al.remove(3);
+		System.out.println(al.toString());
+		al.remove(2);
+		System.out.println(al.toString());
+		al.remove(4);
+		System.out.println(al.toString());
+		al.remove(1);
+		System.out.println(al.toString());
+		al.remove(0);
+		System.out.println(al.toString());
+		al.remove(1);
+		System.out.println(al.toString());
+		al.remove(0);
+		System.out.println(al.toString());
+		al.remove(0);
+		System.out.println(al.toString());
+		
+		
+		
 		for (int i = 0; i < 1000000; i++) {
 			al.add(i);
 		}
