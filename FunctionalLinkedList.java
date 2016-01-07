@@ -25,7 +25,7 @@ public class FunctionalLinkedList extends LinkedList implements FunctionalList {
      */
     public FunctionalList rest() {
 		FunctionalLinkedList rest = new FunctionalLinkedList();
-		if (size() > 0) {
+		if (size() > 1) {
 			for (int i = 1; i < size(); i++) {
 				rest.add(getItem(i));
 			}
