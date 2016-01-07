@@ -25,7 +25,7 @@ public class FunctionalArrayList extends ArrayList implements FunctionalList {
      */
     public FunctionalList rest() {
 		FunctionalArrayList rest = new FunctionalArrayList();
-		if (size() > 0) {
+		if (size() > 1) {
 			for (int i = 1; i < size(); i++) {
 				rest.add(getItem(i));
 			}
