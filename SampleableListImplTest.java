@@ -43,59 +43,66 @@ public class SampleableListImplTest {
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.add("y");
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.add(1, "y");
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.remove(0);
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.get(0);
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.get(100);
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.remove(10);
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.add(null);
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.add(-1, 5);
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
-		
+		System.out.println("Sample copy: " + sl.toString());
 		System.out.println();
 		ro = sl.add(0, null);
 		System.out.println(ro.hasError());
 		System.out.println(ro.getError());
 		System.out.println(ro.getReturnValue());
+		System.out.println("Sample copy: " + sl.toString());
+		
+		myList.add("0");
+		System.out.println("Original: " + myList.toString());
+		myList = sl.sample();
+		System.out.println("Original: " + myList.toString());
+		
 	}
 }
